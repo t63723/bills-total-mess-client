@@ -23,14 +23,8 @@
 	}
 
 	onMount(() => {
-		// Проверяем isLoggedIn и добавляем небольшую задержку
-
-		console.log($isLoggedIn);
-
 		if ($isLoggedIn) {
-			setTimeout(() => {
-				loadProtectedData();
-			}, 0); // Задержка в 0 миллисекунд, чтобы перенести выполнение в следующий цикл событий
+			loadProtectedData();
 		} else {
 			navigateTo('login');
 		}
