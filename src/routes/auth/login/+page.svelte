@@ -11,7 +11,6 @@
 		if (result.ok) {
 			localStorage.setItem('access_token', result.data.access);
 			localStorage.setItem('refresh_token', result.data.refresh);
-			alert('Вы успешно вошли!');
 			goto('/protected');
 		} else {
 			error = result.data.detail || 'Неверные учетные данные';

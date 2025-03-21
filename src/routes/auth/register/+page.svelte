@@ -10,7 +10,6 @@
 	async function register() {
 		const result = await registerUser(username, email, password);
 		if (result.ok) {
-			alert('Регистрация прошла успешно! Теперь войдите.');
 			goto('/auth/login');
 		} else {
 			error = result.data.detail || 'Ошибка регистрации';

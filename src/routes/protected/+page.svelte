@@ -18,7 +18,6 @@
 		} else {
 			error = result.data.detail || 'Ошибка получения защищенных данных';
 			if (result.status === 401) {
-				alert('Ваш токен истек или недействителен. Пожалуйста, войдите снова.');
 				localStorage.removeItem('access_token');
 				localStorage.removeItem('refresh_token');
 				goto('/auth/login');
