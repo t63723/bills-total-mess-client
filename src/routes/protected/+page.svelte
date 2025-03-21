@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { fetchProtectedData } from '$lib/protectedService';
-	import { goto } from '$app/navigation';
+	import { getProtectedData } from '$lib/protectedService';
 	import { onMount } from 'svelte';
+	import { navigateTo, isLoggedIn } from '$lib/appService';
+	import { logout } from '$lib/authService';
 
 	let message = '';
 	let error = '';
@@ -9,7 +10,7 @@
 
 	async function loadProtectedData() {
 		loading = true;
-		const result = await fetchProtectedData();
+		const result = await getProtectedData();
 		loading = false;
 
 		if (result.ok) {
@@ -17,21 +18,26 @@
 			error = '';
 		} else {
 			error = result.data.detail || 'Ошибка получения защищенных данных';
-			if (result.status === 401) {
-				localStorage.removeItem('access_token');
-				localStorage.removeItem('refresh_token');
-				goto('/auth/login');
-			}
 			message = '';
 		}
 	}
 
-	onMount(loadProtectedData);
+	onMount(() => {
+		// Проверяем isLoggedIn и добавляем небольшую задержку
 
-	function logout() {
-		localStorage.removeItem('access_token');
-		localStorage.removeItem('refresh_token');
-		goto('/auth/login');
+		console.log($isLoggedIn);
+
+		if ($isLoggedIn) {
+			setTimeout(() => {
+				loadProtectedData();
+			}, 0); // Задержка в 0 миллисекунд, чтобы перенести выполнение в следующий цикл событий
+		} else {
+			navigateTo('login');
+		}
+	});
+
+	function handleLogout() {
+		logout();
 	}
 </script>
 
@@ -45,6 +51,6 @@
 		{:else if message}
 			<div class="notification is-success">{message}</div>
 		{/if}
-		<button class="button is-warning" on:click={logout}>Выйти</button>
+		<button class="button is-warning" on:click={handleLogout}>Выйти</button>
 	</section>
 </main>

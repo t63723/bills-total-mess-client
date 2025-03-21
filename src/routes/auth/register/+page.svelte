@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { registerUser } from '$lib/authService';
-	import { goto } from '$app/navigation';
+	import { navigateTo } from '$lib/appService';
 
 	let username = '';
 	let email = '';
@@ -10,7 +10,7 @@
 	async function register() {
 		const result = await registerUser(username, email, password);
 		if (result.ok) {
-			goto('/auth/login');
+			navigateTo('login');
 		} else {
 			error = result.data.detail || 'Ошибка регистрации';
 		}
@@ -74,7 +74,10 @@
 					<button class="button is-primary" type="submit">Зарегистрироваться</button>
 				</div>
 			</div>
-			<p class="has-text-centered">Уже есть аккаунт? <a href="/auth/login">Войти</a></p>
+			<p class="has-text-centered">
+				Уже есть аккаунт?
+				<button class="button is-link" on:click={() => navigateTo('login')}>Войти</button>
+			</p>
 		</form>
 	</section>
 </main>

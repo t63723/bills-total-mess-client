@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { loginUser } from '$lib/authService';
-	import { goto } from '$app/navigation';
+	import { navigateTo } from '$lib/appService';
 
 	let username = '';
 	let password = '';
@@ -9,9 +9,7 @@
 	async function login() {
 		const result = await loginUser(username, password);
 		if (result.ok) {
-			localStorage.setItem('access_token', result.data.access);
-			localStorage.setItem('refresh_token', result.data.refresh);
-			goto('/protected');
+			navigateTo('protected');
 		} else {
 			error = result.data.detail || 'Неверные учетные данные';
 		}
@@ -68,7 +66,12 @@
 					<button class="button is-primary" type="submit">Войти</button>
 				</div>
 			</div>
-			<p class="has-text-centered">Нет аккаунта? <a href="/auth/register">Зарегистрироваться</a></p>
+			<p class="has-text-centered">
+				Нет аккаунта?
+				<button class="button is-link" on:click={() => navigateTo('register')}>
+					Зарегистрироваться
+				</button>
+			</p>
 		</form>
 	</section>
 </main>

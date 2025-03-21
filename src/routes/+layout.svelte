@@ -1,8 +1,14 @@
+<script lang="ts">
+	import { navigateTo } from '$lib/appService';
+</script>
+
 <div class="container">
-	<!-- svelte-ignore a11y_no_redundant_roles -->
-	<nav class="navbar" role="navigation" aria-label="main navigation">
+	<nav class="navbar" aria-label="main navigation">
 		<div class="navbar-brand">
-			<a class="navbar-item" href="/"> Главная </a>
+			<button class="navbar-item" on:click={() => navigateTo('home')}>home</button>
+			<button class="navbar-item" on:click={() => navigateTo('login')}>login</button>
+			<button class="navbar-item" on:click={() => navigateTo('register')}>register</button>
+			<button class="navbar-item" on:click={() => navigateTo('protected')}>protected</button>
 		</div>
 	</nav>
 	<slot />
