@@ -1,15 +1,27 @@
-<script lang="ts">
-	import { navigateTo } from '$lib/appService';
+<script>
+	import '../app.scss';
+
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+
+	function handleHome() {
+		goto('/');
+	}
+
+	$: isHomePage = $page.url.pathname === '/';
 </script>
 
-<div class="container">
-	<nav class="navbar" aria-label="main navigation">
-		<div class="navbar-brand">
-			<button class="navbar-item" on:click={() => navigateTo('home')}>home</button>
-			<button class="navbar-item" on:click={() => navigateTo('login')}>login</button>
-			<button class="navbar-item" on:click={() => navigateTo('register')}>register</button>
-			<button class="navbar-item" on:click={() => navigateTo('protected')}>protected</button>
+<div class="container-fluid">
+	{#if !isHomePage}
+		<div class="container">
+			<div class="p-2">
+				<div>
+					<button type="button" class="button" on:click={handleHome}>home</button>
+				</div>
+			</div>
 		</div>
-	</nav>
-	<slot />
+	{/if}
+	<div>
+		<slot />
+	</div>
 </div>

@@ -1,20 +1,22 @@
 <script lang="ts">
-	import { currentPage } from '$lib/appService';
-	import LoginPage from './auth/login/+page.svelte';
-	import RegisterPage from './auth/register/+page.svelte';
-	import ProtectedPage from './protected/+page.svelte';
+	import { goto } from '$app/navigation';
+
+	function handleLogin() {
+		goto('login/');
+	}
 </script>
 
 <main class="container">
-	<section class="section">
-		{#if $currentPage === 'home'}
-			<p>Вы находитесь на главной странице</p>
-		{:else if $currentPage === 'login'}
-			<LoginPage />
-		{:else if $currentPage === 'register'}
-			<RegisterPage />
-		{:else if $currentPage === 'protected'}
-			<ProtectedPage />
-		{/if}
-	</section>
+	<div class="p-3">
+		<div class="pt-5">
+			<div class="has-text-centered">
+				<div class="p-3">
+					<p>welcome page</p>
+				</div>
+			</div>
+			<div class="has-text-centered">
+				<button type="button" class="button" on:click={handleLogin}>login</button>
+			</div>
+		</div>
+	</div>
 </main>
